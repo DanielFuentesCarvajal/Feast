@@ -9,9 +9,10 @@ public class Enemigo : MonoBehaviour
     public Tilemap tilemap;
     public float speed = 2f; // Velocidad de movimiento
     public float health = 100f; // Vida del enemigo
+    public float maxHealth = 100f; // Vida máxima del enemigo
     public float damage = 10f; // Daño que inflige el enemigo
-    public Slider healthBar; // barra de vida
-    public Transform objetivo; 
+    public Slider healthBar; // Barra de vida
+    public Transform objetivo;
 
     private Vector3Int currentTile;
     private Queue<Vector3Int> tileQueue = new Queue<Vector3Int>();
@@ -32,6 +33,8 @@ public class Enemigo : MonoBehaviour
         currentTile = tilemap.WorldToCell(transform.position);
         tileQueue.Enqueue(currentTile);
         visitedTiles.Add(currentTile);
+        healthBar.maxValue = maxHealth; // Establecer el máximo
+        healthBar.value = health; // Establecer el valor inicial
         UpdateHealthBar();
         StartCoroutine(MoveToNextTile());
     }
@@ -43,7 +46,7 @@ public class Enemigo : MonoBehaviour
             Vector3Int targetTile = tileQueue.Dequeue();
             Vector3 targetPosition = tilemap.GetCellCenterWorld(targetTile);
 
-            Debug.Log($"Dirigiéndose a: Tilemap Coordenadas: {targetTile}, World Coordenadas: {targetPosition}");
+            //Debug.Log($"Dirigiéndose a: Tilemap Coordenadas: {targetTile}, World Coordenadas: {targetPosition}");
 
             while (Vector3.Distance(transform.position, targetPosition) > 0.01f)
             {
@@ -52,7 +55,7 @@ public class Enemigo : MonoBehaviour
                 // Comprobar si está cerca del centro de la tile y mostrar las coordenadas
                 if (Vector3.Distance(transform.position, targetPosition) < 0.1f)
                 {
-                    Debug.Log($"Llegado a Tile: Tilemap Coordenadas: {targetTile}, World Coordenadas: {targetPosition}");
+                    //Debug.Log($"Llegado a Tile: Tilemap Coordenadas: {targetTile}, World Coordenadas: {targetPosition}");
 
                     Collider2D collider = Physics2D.OverlapPoint(targetPosition);
                     if (collider != null && collider.CompareTag("Objetivo"))
@@ -82,21 +85,27 @@ public class Enemigo : MonoBehaviour
             }
         }
     }
+
+    public void TakeDamage(float amount)
+    {
+        Debug.Log($"{gameObject.name} recibió {amount} de daño. Salud antes: {health}");
+        health -= amount;
+        health = Mathf.Clamp(health, 0, maxHealth); // Asegurarse de que la salud no baje de 0
+        Debug.Log($"{gameObject.name} Salud después: {health}");
+        UpdateHealthBar();
+
+        if (health <= 0)
+        {
+            Debug.Log($"{gameObject.name} ha muerto.");
+            Die();
+        }
+    }
+
     void UpdateHealthBar()
     {
         if (healthBar != null)
         {
-            healthBar.value = health;
-        }
-    }
-    public void TakeDamage(float damage)
-    {
-        health -= damage;
-        UpdateHealthBar(); 
-
-        if (health <= 0)
-        {
-            Die();
+            healthBar.value = health; // Actualizar el valor de la barra de salud
         }
     }
     void Die()

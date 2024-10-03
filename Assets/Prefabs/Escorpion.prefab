@@ -143,7 +143,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b09cfd8bd3a7ede4890055027fffd83c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tipoProyectil: 0
-  rangoMinimo: 1
-  rangoMaximo: 5
-  tiempoEntreDisparos: 1
+  projectileConfig: {fileID: 11400000, guid: 23e6fbc4f6823e548a4f13a3fe009d3d, type: 2}
+  range: 3
+  fireRate: 10

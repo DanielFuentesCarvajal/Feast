@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 8084703991256433487}
   m_Layer: 0
   m_Name: Enemigo 2
-  m_TagString: Untagged
+  m_TagString: Enemigo
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -102,8 +102,9 @@ MonoBehaviour:
   tilemap: {fileID: 0}
   speed: 5
   health: 100
+  maxHealth: 100
   damage: 2
-  healthBar: {fileID: 3771002849236282566}
+  healthBar: {fileID: 0}
   objetivo: {fileID: 0}
 --- !u!61 &8084703991256433487
 BoxCollider2D:
@@ -140,7 +141,7 @@ BoxCollider2D:
   m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0.5, y: 0.255}
     oldSize: {x: 1, y: 1.939394}
     newSize: {x: 1, y: 1.939394}
     adaptiveTilingThreshold: 0.5
@@ -259,17 +260,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5956a8d29602df64697ca24912163868, type: 3}
---- !u!114 &3771002849236282566 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2061660091539194260, guid: 5956a8d29602df64697ca24912163868, type: 3}
-  m_PrefabInstance: {fileID: 2938941746513309010}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!224 &4501549017999814409 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 1635230018799845979, guid: 5956a8d29602df64697ca24912163868, type: 3}

@@ -1,142 +1,71 @@
 using UnityEngine;
 
-public class Torreta : MonoBehaviour
+public class Turret : MonoBehaviour
 {
     [Header("Configuración de la Torreta")]
-    public ProyectilesManager.TipoProyectil tipoProyectil; // Lista desplegable en el Inspector
-    public float rangoMinimo = 1f;
-    public float rangoMaximo = 5f;
-    public float tiempoEntreDisparos = 1f;
+    public ProjectileConfig projectileConfig; // Configuración del proyectil
+    public float range = 5f; // Rango de detección de enemigos
+    public float fireRate = 1f; // Tasa de disparo (disparos por segundo)
 
-    private Transform objetivo;
-    private float siguienteDisparo = 0f;
-    private ProyectilesManager proyectilesManager;
-
-    void Start()
-    {
-        Debug.Log("Torreta iniciada.");
-        proyectilesManager = ProyectilesManager.Instance;
-        if (proyectilesManager == null)
-        {
-            Debug.LogError("ProyectilesManager no se ha encontrado.");
-        }
-        else
-        {
-            Debug.Log("ProyectilesManager encontrado.");
-        }
-    }
+    private float fireCountdown = 0f;
 
     void Update()
     {
-        Debug.Log("Update llamado.");
-        BuscarObjetivo();
+        // Reducir el contador de tiempo para el disparo
+        if (fireCountdown > 0f)
+            fireCountdown -= Time.deltaTime;
 
-        if (objetivo != null)
-        {
-            float distancia = Vector3.Distance(transform.position, objetivo.position);
-            Debug.Log("Distancia al objetivo: " + distancia);
+        // Buscar el enemigo más cercano dentro del rango
+        GameObject target = GetClosestEnemy();
 
-            // Verifica si el enemigo está dentro del rango mínimo y máximo
-            if (distancia >= rangoMinimo && distancia <= rangoMaximo)
-            {
-                Debug.Log("El enemigo está dentro del rango.");
-                // Dispara solo si ha pasado el tiempo suficiente entre disparos
-                if (Time.time >= siguienteDisparo)
-                {
-                    Debug.Log("Es hora de disparar.");
-                    Disparar();
-                    siguienteDisparo = Time.time + tiempoEntreDisparos;
-                }
-                else
-                {
-                    Debug.Log("Esperando al próximo disparo.");
-                }
-            }
-            else
-            {
-                Debug.Log("El enemigo está fuera del rango.");
-            }
-        }
-        else
+        if (target != null && fireCountdown <= 0f)
         {
-            Debug.Log("No se ha encontrado ningún objetivo.");
+            Shoot(target);
+            fireCountdown = 1f / fireRate;
         }
     }
 
-    void BuscarObjetivo()
+    // Método para encontrar el enemigo más cercano dentro del rango
+    GameObject GetClosestEnemy()
     {
-        Debug.Log("Buscando objetivo.");
-        // Busca enemigos dentro del rango máximo
-        Collider2D[] enemigosEnRango = Physics2D.OverlapCircleAll(transform.position, rangoMaximo);
-        Debug.Log("Enemigos encontrados: " + enemigosEnRango.Length);
+        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemigo");
+        GameObject closest = null;
+        float minDistance = Mathf.Infinity;
+        Vector3 currentPos = transform.position;
 
-        Transform enemigoCercano = null;
-        float distanciaCercana = Mathf.Infinity;
-
-        foreach (Collider2D collider in enemigosEnRango)
+        foreach (GameObject enemy in enemies)
         {
-            if (collider.CompareTag("Enemigo"))
+            float distance = Vector3.Distance(currentPos, enemy.transform.position);
+            if (distance < minDistance && distance <= range)
             {
-                float distancia = Vector3.Distance(transform.position, collider.transform.position);
-                Debug.Log("Distancia al enemigo: " + distancia);
-                if (distancia < distanciaCercana)
-                {
-                    distanciaCercana = distancia;
-                    enemigoCercano = collider.transform;
-                }
+                minDistance = distance;
+                closest = enemy;
             }
         }
 
-        objetivo = enemigoCercano;
-        if (objetivo != null)
+        return closest;
+    }
+
+    // Método para disparar un proyectil hacia el objetivo
+    void Shoot(GameObject target)
+    {
+        // Instanciar el proyectil en la posición de la torreta
+        GameObject projectile = Instantiate(projectileConfig.visualPrefab != null ?
+            projectileConfig.visualPrefab : ProjectileManager.Instance.defaultProjectilePrefab,
+            transform.position, Quaternion.identity);
+
+        // Obtener el script del proyectil y configurar sus propiedades
+        Projectile projectileScript = projectile.GetComponent<Projectile>();
+        if (projectileScript != null)
         {
-            Debug.Log("Objetivo asignado: " + objetivo.name);
-        }
-        else
-        {
-            Debug.Log("No se ha asignado ningún objetivo.");
+            projectileScript.Initialize(target, projectileConfig);
         }
     }
 
-    void Disparar()
+    // Opcional: Visualización del rango en el Editor
+    void OnDrawGizmosSelected()
     {
-        Debug.Log("Intentando disparar proyectil.");
-        if (proyectilesManager != null && objetivo != null)
-        {
-            Debug.Log("Intentando disparar proyectil al objetivo: " + objetivo.name);
-            GameObject proyectilPrefab = proyectilesManager.ObtenerProyectilPrefab(tipoProyectil);
-            if (proyectilPrefab != null)
-            {
-                Debug.Log("Proyectil prefab encontrado: " + proyectilPrefab.name);
-                GameObject proyectilObj = Instantiate(proyectilPrefab, transform.position, Quaternion.identity);
-                Proyectil proyectilScript = proyectilObj.GetComponent<Proyectil>();
-                if (proyectilScript != null)
-                {
-                    // Direcciona el proyectil hacia el enemigo
-                    Vector3 direccion = (objetivo.position - transform.position).normalized;
-                    Debug.Log("Disparando proyectil en la dirección: " + direccion);
-                    proyectilScript.Iniciar(direccion);
-                }
-                else
-                {
-                    Debug.LogError("El proyectil instanciado no tiene el script Proyectil.");
-                }
-            }
-            else
-            {
-                Debug.LogError("No se pudo obtener el prefab del proyectil.");
-            }
-        }
-        else
-        {
-            if (proyectilesManager == null)
-            {
-                Debug.LogError("ProyectilesManager es nulo.");
-            }
-            if (objetivo == null)
-            {
-                Debug.LogError("Objetivo es nulo.");
-            }
-        }
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, range);
     }
 }

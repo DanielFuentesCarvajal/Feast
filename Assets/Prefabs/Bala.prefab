@@ -10,9 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 8273985117026446696}
   - component: {fileID: 4808969534809720505}
-  - component: {fileID: 3490973015090682767}
-  - component: {fileID: 3689606334882280357}
-  - component: {fileID: 3078333189576764771}
+  - component: {fileID: 7041770683783718964}
+  - component: {fileID: 4632618539117337648}
+  - component: {fileID: -8329078526599138410}
   m_Layer: 0
   m_Name: Bala
   m_TagString: Untagged
@@ -87,7 +87,34 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!58 &3490973015090682767
+--- !u!50 &7041770683783718964
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 424702034101783650}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
+--- !u!58 &4632618539117337648
 CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -116,40 +143,13 @@ CircleCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.5
---- !u!50 &3689606334882280357
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 424702034101783650}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 0
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0
---- !u!114 &3078333189576764771
+--- !u!114 &-8329078526599138410
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -158,13 +158,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 424702034101783650}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8cced73e91acb6643ac6627b718e2264, type: 3}
+  m_Script: {fileID: 11500000, guid: bbdf6697ecb25d043ad6297b15b1d23f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  "da\xF1o": 5
-  velocidad: 10
-  areaEfecto: 1
-  particulaSistemaImpacto: {fileID: 0}
-  particulaSistemaDisparo: {fileID: 0}
-  "da\xF1oBala": 5
-  velocidadBala: 10
+  impactParticles: {fileID: 0}
+  shootParticles: {fileID: 0}

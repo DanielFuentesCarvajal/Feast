@@ -1,61 +1,21 @@
 using UnityEngine;
-using System.Collections.Generic;
 
-public class ProyectilesManager : MonoBehaviour
+public class ProjectileManager : MonoBehaviour
 {
-    public static ProyectilesManager Instance { get; private set; }
+    public static ProjectileManager Instance;
 
-    public enum TipoProyectil
-    {
-        Flecha,
-        Bala,
-        BolaDeHierro
-    }
+    public GameObject defaultProjectilePrefab; // Prefab predeterminado si no se asigna uno específico
 
-    [Header("Prefabs de Proyectiles")]
-    public GameObject proyectilFlechaPrefab;
-    public GameObject proyectilBalaPrefab;
-    public GameObject proyectilBolaDeHierroPrefab;
-
-    private Dictionary<TipoProyectil, GameObject> proyectiles;
-
-    private void Awake()
+    void Awake()
     {
         if (Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject);
-            InicializarProyectiles();
-            Debug.Log("ProyectilesManager inicializado.");
+            DontDestroyOnLoad(gameObject); // Opcional: Mantener el objeto entre escenas
         }
         else
         {
             Destroy(gameObject);
-        }
-    }
-
-    private void InicializarProyectiles()
-    {
-        proyectiles = new Dictionary<TipoProyectil, GameObject>
-        {
-            { TipoProyectil.Flecha, proyectilFlechaPrefab },
-            { TipoProyectil.Bala, proyectilBalaPrefab },
-            { TipoProyectil.BolaDeHierro, proyectilBolaDeHierroPrefab }
-        };
-        Debug.Log("Proyectiles inicializados: " + proyectiles.Count);
-    }
-
-    public GameObject ObtenerProyectilPrefab(TipoProyectil tipoProyectil)
-    {
-        if (proyectiles.TryGetValue(tipoProyectil, out GameObject prefab))
-        {
-            Debug.Log("Obtenido prefab de proyectil: " + prefab.name);
-            return prefab;
-        }
-        else
-        {
-            Debug.LogWarning("Tipo de proyectil no encontrado: " + tipoProyectil);
-            return null;
         }
     }
 }
