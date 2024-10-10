@@ -144,5 +144,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   projectileConfig: {fileID: 11400000, guid: 23e6fbc4f6823e548a4f13a3fe009d3d, type: 2}
-  range: 3
+  range: 4
   fireRate: 10
+  cost: 25

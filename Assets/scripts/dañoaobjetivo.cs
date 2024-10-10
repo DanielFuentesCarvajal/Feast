@@ -7,13 +7,18 @@ public class Objetivo : MonoBehaviour
     public float maxHealth = 100f; // Vida máxima del objetivo
     public Slider healthBar; //barra de vida
 
+    private ButtonSelectionManager buttonSelectionManager; // Referencia al ButtonSelectionManager
+
     void Start()
     {
         if (healthBar != null)
         {
-            healthBar.maxValue = maxHealth; 
-            healthBar.value = health; 
+            healthBar.maxValue = maxHealth;
+            healthBar.value = health;
         }
+
+        // Buscar y asignar el ButtonSelectionManager
+        buttonSelectionManager = FindObjectOfType<ButtonSelectionManager>();
     }
 
     public void TakeDamage(float damage)
@@ -31,14 +36,15 @@ public class Objetivo : MonoBehaviour
 
     void Die()
     {
-        Destroy(gameObject);
+        // Notificar al ButtonSelectionManager de la derrota
+        buttonSelectionManager.CheckObjectiveHealth(health);
     }
 
     void UpdateHealthBar()
     {
         if (healthBar != null)
         {
-            healthBar.value = health; 
+            healthBar.value = health;
         }
     }
 }

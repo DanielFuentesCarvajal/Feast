@@ -11,7 +11,6 @@ public class ProjectileManager : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject); // Opcional: Mantener el objeto entre escenas
         }
         else
         {

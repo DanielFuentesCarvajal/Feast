@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Bola
   m_EditorClassIdentifier: 
   damage: 14
-  speed: 100
+  speed: 10
   areaOfEffect: 30
   impactParticles: {fileID: 0}
   shootParticles: {fileID: 0}

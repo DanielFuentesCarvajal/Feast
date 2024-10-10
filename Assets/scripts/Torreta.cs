@@ -6,7 +6,8 @@ public class Turret : MonoBehaviour
     public ProjectileConfig projectileConfig; // Configuración del proyectil
     public float range = 5f; // Rango de detección de enemigos
     public float fireRate = 1f; // Tasa de disparo (disparos por segundo)
-
+    [Header("Coste")]
+    public int cost = 50; // Coste en monedas para colocar la torreta
     private float fireCountdown = 0f;
 
     void Update()

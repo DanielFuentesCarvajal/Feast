@@ -11,6 +11,8 @@ public class Enemigo : MonoBehaviour
     public float health = 100f; // Vida del enemigo
     public float maxHealth = 100f; // Vida máxima del enemigo
     public float damage = 10f; // Daño que inflige el enemigo
+    [Header("Recompensa")]
+    public int reward = 10; // Valor en monedas al destruir al enemigo
     public Slider healthBar; // Barra de vida
     public Transform objetivo;
 
@@ -38,6 +40,8 @@ public class Enemigo : MonoBehaviour
         UpdateHealthBar();
         StartCoroutine(MoveToNextTile());
     }
+
+
 
     IEnumerator MoveToNextTile()
     {
@@ -110,6 +114,7 @@ public class Enemigo : MonoBehaviour
     }
     void Die()
     {
+        GameManager.Instance.AddCoins(reward);
         Destroy(gameObject);
     }
 }

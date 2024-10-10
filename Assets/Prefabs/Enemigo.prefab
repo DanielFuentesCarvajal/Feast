@@ -98,8 +98,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tilemap: {fileID: 0}
-  speed: 2
+  speed: 50
   health: 100
+  maxHealth: 100
   damage: 10
+  reward: 10
   healthBar: {fileID: 0}
   objetivo: {fileID: 0}

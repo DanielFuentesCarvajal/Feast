@@ -31,9 +31,32 @@ public class TorretaPlacementManager : MonoBehaviour
 
                 if (prefabTorreta != null && !HayTorretaEnPosicion(posicionMundo))
                 {
-                    Instantiate(prefabTorreta, posicionMundo + ajuste, Quaternion.identity);
-                    // Desactiva la selección después de colocar la torreta
-                    buttonSelectionManager.SelectPrefab(null);
+                    // Obtener el coste de la torreta
+                    Turret turretScript = prefabTorreta.GetComponent<Turret>();
+                    if (turretScript != null)
+                    {
+                        int cost = turretScript.cost;
+                        // Intentar restar el coste
+                        if (GameManager.Instance.SubtractCoins(cost))
+                        {
+                            // Instanciar la torreta si se pudo restar el coste
+                            Instantiate(prefabTorreta, posicionMundo + ajuste, Quaternion.identity);
+                            // Desactiva la selección después de colocar la torreta
+                            buttonSelectionManager.SelectPrefab(null);
+                        }
+                        else
+                        {
+                            // Opcional: Mostrar mensaje de falta de monedas
+                            Debug.Log("No tienes suficientes monedas para esta torreta.");
+                        }
+                    }
+                    else
+                    {
+                        // Si el prefab no tiene el script Turret, instanciar de igual forma
+                        Instantiate(prefabTorreta, posicionMundo + ajuste, Quaternion.identity);
+                        // Desactiva la selección después de colocar la torreta
+                        buttonSelectionManager.SelectPrefab(null);
+                    }
                 }
             }
         }
