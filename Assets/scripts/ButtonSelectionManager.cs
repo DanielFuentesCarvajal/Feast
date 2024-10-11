@@ -42,6 +42,7 @@ public class ButtonSelectionManager : MonoBehaviour
         StartCoroutine(StartTimer());
     }
 
+
     // Selección de prefab
     public void SelectPrefab(GameObject prefab)
     {

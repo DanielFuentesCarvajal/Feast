@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4e7772f7db07314d8c6d3260318974a, type: 3}
   m_Name: Bola
   m_EditorClassIdentifier: 
-  damage: 14
-  speed: 10
+  damage: 35
+  speed: 15
   areaOfEffect: 30
   impactParticles: {fileID: 0}
   shootParticles: {fileID: 0}

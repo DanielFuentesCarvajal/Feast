@@ -160,7 +160,7 @@ MonoBehaviour:
   NextLevelButton: {fileID: 642236120}
   RetryButton: {fileID: 326496740}
   timerText: {fileID: 1935047390}
-  timerMinutes: 10
+  timerMinutes: 2
   timerSeconds: 10
 --- !u!4 &120098918
 Transform:
@@ -515,9 +515,63 @@ MonoBehaviour:
   - prefabEnemigo: {fileID: 2069387354}
     objetivo: {fileID: 0}
     esquina: {x: -11, y: -2.04, z: 0}
+    cantidadEnemigos: 15
+    tiempoDeSpawn: 8
+    tiempoDeEspera: 5
+  - prefabEnemigo: {fileID: 1856878197}
+    objetivo: {fileID: 0}
+    esquina: {x: -11, y: -2.04, z: 0}
+    cantidadEnemigos: 3
+    tiempoDeSpawn: 3
+    tiempoDeEspera: 8
+  - prefabEnemigo: {fileID: 2069387354}
+    objetivo: {fileID: 0}
+    esquina: {x: -11, y: -2.04, z: 0}
     cantidadEnemigos: 100
-    tiempoDeSpawn: 2
-    tiempoDeEspera: 0
+    tiempoDeSpawn: 150
+    tiempoDeEspera: 50
+  - prefabEnemigo: {fileID: 2069387354}
+    objetivo: {fileID: 0}
+    esquina: {x: -11, y: -2.04, z: 0}
+    cantidadEnemigos: 120
+    tiempoDeSpawn: 60
+    tiempoDeEspera: 60
+  - prefabEnemigo: {fileID: 1856878197}
+    objetivo: {fileID: 0}
+    esquina: {x: -11, y: -2.04, z: 0}
+    cantidadEnemigos: 25
+    tiempoDeSpawn: 32
+    tiempoDeEspera: 75
+  - prefabEnemigo: {fileID: 1856878197}
+    objetivo: {fileID: 0}
+    esquina: {x: 12.5, y: 6.63, z: 0}
+    cantidadEnemigos: 100
+    tiempoDeSpawn: 50
+    tiempoDeEspera: 80
+  - prefabEnemigo: {fileID: 2069387354}
+    objetivo: {fileID: 0}
+    esquina: {x: 12.5, y: 6.63, z: 0}
+    cantidadEnemigos: 100
+    tiempoDeSpawn: 35
+    tiempoDeEspera: 80
+  - prefabEnemigo: {fileID: 1856878197}
+    objetivo: {fileID: 0}
+    esquina: {x: 12.5, y: 6.63, z: 0}
+    cantidadEnemigos: 15
+    tiempoDeSpawn: 8
+    tiempoDeEspera: 32
+  - prefabEnemigo: {fileID: 2069387354}
+    objetivo: {fileID: 0}
+    esquina: {x: 12.5, y: 6.63, z: 0}
+    cantidadEnemigos: 25
+    tiempoDeSpawn: 10
+    tiempoDeEspera: 30
+  - prefabEnemigo: {fileID: 2069387354}
+    objetivo: {fileID: 0}
+    esquina: {x: 12.5, y: 6.63, z: 0}
+    cantidadEnemigos: 30
+    tiempoDeSpawn: 12
+    tiempoDeEspera: 9
 --- !u!224 &282453590 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 1635230018799845979, guid: 5956a8d29602df64697ca24912163868, type: 3}
@@ -723,10 +777,10 @@ RectTransform:
   - {fileID: 492521464}
   m_Father: {fileID: 457476555}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -498.1, y: 235.4}
-  m_SizeDelta: {x: 132.38, y: 37.600006}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 81.20001, y: -23.5}
+  m_SizeDelta: {x: 150, y: 35}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &377816509
 MonoBehaviour:
@@ -1093,7 +1147,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -5476971614429003836, guid: d6ace30417e8f014383780b0730e4e37, type: 3}
       propertyPath: speed
-      value: 20
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: -5476971614429003836, guid: d6ace30417e8f014383780b0730e4e37, type: 3}
+      propertyPath: damage
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: -5476971614429003836, guid: d6ace30417e8f014383780b0730e4e37, type: 3}
+      propertyPath: reward
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: -5476971614429003836, guid: d6ace30417e8f014383780b0730e4e37, type: 3}
       propertyPath: tilemap
@@ -1109,11 +1171,11 @@ PrefabInstance:
       objectReference: {fileID: 1441136069}
     - target: {fileID: 3780002245407414325, guid: d6ace30417e8f014383780b0730e4e37, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -18.98
+      value: -32.15
       objectReference: {fileID: 0}
     - target: {fileID: 3780002245407414325, guid: d6ace30417e8f014383780b0730e4e37, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 3.61
+      value: 17.07
       objectReference: {fileID: 0}
     - target: {fileID: 3780002245407414325, guid: d6ace30417e8f014383780b0730e4e37, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1637,9 +1699,9 @@ RectTransform:
   - {fileID: 529115511}
   m_Father: {fileID: 457476555}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -534, y: -224}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 29, y: 32}
   m_SizeDelta: {x: 65, y: 65}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &811544502
@@ -3995,10 +4057,10 @@ RectTransform:
   - {fileID: 326496739}
   m_Father: {fileID: 457476555}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: -25}
-  m_SizeDelta: {x: -600, y: -300}
+  m_SizeDelta: {x: 486, y: 212}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1720086576
 MonoBehaviour:
@@ -4068,7 +4130,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5098286984691504220, guid: ee1f21c3edebb8e4497c80bf14727677, type: 3}
       propertyPath: speed
-      value: 25
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 5098286984691504220, guid: ee1f21c3edebb8e4497c80bf14727677, type: 3}
+      propertyPath: damage
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 5098286984691504220, guid: ee1f21c3edebb8e4497c80bf14727677, type: 3}
+      propertyPath: health
+      value: 500
+      objectReference: {fileID: 0}
+    - target: {fileID: 5098286984691504220, guid: ee1f21c3edebb8e4497c80bf14727677, type: 3}
+      propertyPath: reward
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 5098286984691504220, guid: ee1f21c3edebb8e4497c80bf14727677, type: 3}
       propertyPath: tilemap
@@ -4082,6 +4156,10 @@ PrefabInstance:
       propertyPath: healthBar
       value: 
       objectReference: {fileID: 151958453}
+    - target: {fileID: 5098286984691504220, guid: ee1f21c3edebb8e4497c80bf14727677, type: 3}
+      propertyPath: maxHealth
+      value: 500
+      objectReference: {fileID: 0}
     - target: {fileID: 6877021215396314429, guid: ee1f21c3edebb8e4497c80bf14727677, type: 3}
       propertyPath: m_Name
       value: Enemigo 2 (2)
@@ -4092,11 +4170,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6950495085567082026, guid: ee1f21c3edebb8e4497c80bf14727677, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -20.52
+      value: -34.4
       objectReference: {fileID: 0}
     - target: {fileID: 6950495085567082026, guid: ee1f21c3edebb8e4497c80bf14727677, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.42
+      value: 16.86
       objectReference: {fileID: 0}
     - target: {fileID: 6950495085567082026, guid: ee1f21c3edebb8e4497c80bf14727677, type: 3}
       propertyPath: m_LocalPosition.z
@@ -4179,10 +4257,10 @@ RectTransform:
   - {fileID: 642236119}
   m_Father: {fileID: 457476555}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: -25}
-  m_SizeDelta: {x: -600, y: -300}
+  m_SizeDelta: {x: 486, y: 212}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1782788989
 MonoBehaviour:
@@ -4306,9 +4384,9 @@ RectTransform:
   - {fileID: 1943766110}
   m_Father: {fileID: 457476555}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -534, y: -159}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 29, y: 97}
   m_SizeDelta: {x: 65, y: 65}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1934256796
@@ -4428,7 +4506,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: -0.0000076293945}
-  m_SizeDelta: {x: 133, y: 33}
+  m_SizeDelta: {x: 133, y: 35}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1935047390
 MonoBehaviour:
@@ -12473,10 +12551,10 @@ RectTransform:
   - {fileID: 1935047389}
   m_Father: {fileID: 457476555}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 235}
-  m_SizeDelta: {x: -1000, y: -480}
+  m_AnchorMin: {x: 0.5, y: 1}
+  m_AnchorMax: {x: 0.5, y: 1}
+  m_AnchoredPosition: {x: 0, y: -22.5}
+  m_SizeDelta: {x: 125, y: 33}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2041973884
 MonoBehaviour:
