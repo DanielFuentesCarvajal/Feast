@@ -19,7 +19,7 @@ public class Enemigo : MonoBehaviour
     private Vector3Int currentTile;
     private Queue<Vector3Int> tileQueue = new Queue<Vector3Int>();
     private HashSet<Vector3Int> visitedTiles = new HashSet<Vector3Int>();
-
+    private Vector3 lastPosition; // Para almacenar la última posición
     private Vector3[] directions = new Vector3[]
     {
         new Vector3(1f, 0f, 0f),   // Derecha
@@ -38,9 +38,9 @@ public class Enemigo : MonoBehaviour
         healthBar.maxValue = maxHealth; // Establecer el máximo
         healthBar.value = health; // Establecer el valor inicial
         UpdateHealthBar();
+        lastPosition = transform.position; // Inicializar la última posición
         StartCoroutine(MoveToNextTile());
     }
-
 
 
     IEnumerator MoveToNextTile()
@@ -50,17 +50,27 @@ public class Enemigo : MonoBehaviour
             Vector3Int targetTile = tileQueue.Dequeue();
             Vector3 targetPosition = tilemap.GetCellCenterWorld(targetTile);
 
-            //Debug.Log($"Dirigiéndose a: Tilemap Coordenadas: {targetTile}, World Coordenadas: {targetPosition}");
-
             while (Vector3.Distance(transform.position, targetPosition) > 0.01f)
             {
                 transform.position = Vector3.MoveTowards(transform.position, targetPosition, speed * Time.deltaTime);
 
+                // Determinar la dirección de movimiento y aplicar flip si es necesario
+                Vector3 direction = transform.position - lastPosition;
+                if (direction.x < 0) // Se está moviendo hacia la izquierda
+                {
+                    transform.localScale = new Vector3(-Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
+                }
+                else if (direction.x > 0) // Se está moviendo hacia la derecha
+                {
+                    transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
+                }
+
+                // Actualizar la última posición
+                lastPosition = transform.position;
+
                 // Comprobar si está cerca del centro de la tile y mostrar las coordenadas
                 if (Vector3.Distance(transform.position, targetPosition) < 0.1f)
                 {
-                    //Debug.Log($"Llegado a Tile: Tilemap Coordenadas: {targetTile}, World Coordenadas: {targetPosition}");
-
                     Collider2D collider = Physics2D.OverlapPoint(targetPosition);
                     if (collider != null && collider.CompareTag("Objetivo"))
                     {

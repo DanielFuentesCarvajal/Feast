@@ -74,9 +74,9 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 18
-  m_Sprite: {fileID: 21300000, guid: 2faf73095c79fe643913dda02aa8b0b7, type: 3}
-  m_Color: {r: 0, g: 0.1997869, b: 1, a: 1}
+  m_SortingOrder: 50
+  m_Sprite: {fileID: 21300000, guid: 9b6a8467ae22a1a4f9ef37ec26268371, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -122,7 +122,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1.939394}
+    oldSize: {x: 0.825, y: 1.6}
     newSize: {x: 1, y: 1.939394}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -145,5 +145,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   projectileConfig: {fileID: 11400000, guid: f29b2da8b64494c4f9a2fc9d10602a59, type: 2}
   range: 6
-  fireRate: 1
+  fireRate: 2
   cost: 20
