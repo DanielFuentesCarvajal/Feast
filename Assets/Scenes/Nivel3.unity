@@ -144,7 +144,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -5476971614429003836, guid: d6ace30417e8f014383780b0730e4e37, type: 3}
       propertyPath: reward
-      value: 50
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: -5476971614429003836, guid: d6ace30417e8f014383780b0730e4e37, type: 3}
       propertyPath: tilemap
@@ -2934,9 +2934,9 @@ MonoBehaviour:
   NextLevelButton: {fileID: 642236120}
   RetryButton: {fileID: 326496740}
   timerText: {fileID: 1935047390}
-  timerMinutes: 1
-  timerSeconds: 10
-  nextSceneIndex: 2
+  timerMinutes: 5
+  timerSeconds: 0
+  nextSceneIndex: 3
 --- !u!4 &120098918
 Transform:
   m_ObjectHideFlags: 0
@@ -3478,81 +3478,183 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a779beb27e1d06c45b42ae677ee91064, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startingCoins: 1000
+  startingCoins: 3500
   coinsText: {fileID: 492521462}
   spawnConfigs:
-  - prefabEnemigo: {fileID: 1538079556}
+  - prefabEnemigo: {fileID: 1856878197}
     objetivo: {fileID: 1640660233}
-    cantidadEnemigos: 19
-    tiempoDeSpawn: 5
-    tiempoDeEspera: 0
-    spawnPointsIndices: 000000000100000002000000
-  - prefabEnemigo: {fileID: 2038183606}
+    cantidadEnemigos: 80
+    tiempoDeSpawn: 20
+    tiempoDeEspera: 15
+    spawnPointsIndices: 00000000
+  - prefabEnemigo: {fileID: 3480298400801407221}
     objetivo: {fileID: 1640660233}
-    cantidadEnemigos: 10
-    tiempoDeSpawn: 5
-    tiempoDeEspera: 0
+    cantidadEnemigos: 40
+    tiempoDeSpawn: 20
+    tiempoDeEspera: 15
+    spawnPointsIndices: 01000000
+  - prefabEnemigo: {fileID: 129617933}
+    objetivo: {fileID: 1640660233}
+    cantidadEnemigos: 60
+    tiempoDeSpawn: 20
+    tiempoDeEspera: 15
+    spawnPointsIndices: 02000000
+  - prefabEnemigo: {fileID: 866950886}
+    objetivo: {fileID: 1640660233}
+    cantidadEnemigos: 250
+    tiempoDeSpawn: 30
+    tiempoDeEspera: 40
     spawnPointsIndices: 000000000100000002000000
   - prefabEnemigo: {fileID: 510037859}
     objetivo: {fileID: 1640660233}
-    cantidadEnemigos: 1
-    tiempoDeSpawn: 1
-    tiempoDeEspera: 15
-    spawnPointsIndices: 
+    cantidadEnemigos: 8
+    tiempoDeSpawn: 15
+    tiempoDeEspera: 45
+    spawnPointsIndices: 0000000001000000
+  - prefabEnemigo: {fileID: 119474826}
+    objetivo: {fileID: 1640660233}
+    cantidadEnemigos: 10
+    tiempoDeSpawn: 20
+    tiempoDeEspera: 45
+    spawnPointsIndices: 0100000002000000
+  - prefabEnemigo: {fileID: 129617933}
+    objetivo: {fileID: 1640660233}
+    cantidadEnemigos: 50
+    tiempoDeSpawn: 20
+    tiempoDeEspera: 60
+    spawnPointsIndices: 00000000
+  - prefabEnemigo: {fileID: 119474826}
+    objetivo: {fileID: 1640660233}
+    cantidadEnemigos: 10
+    tiempoDeSpawn: 20
+    tiempoDeEspera: 60
+    spawnPointsIndices: 01000000
+  - prefabEnemigo: {fileID: 7971009939213125286}
+    objetivo: {fileID: 1640660233}
+    cantidadEnemigos: 2
+    tiempoDeSpawn: 10
+    tiempoDeEspera: 70
+    spawnPointsIndices: 02000000
+  - prefabEnemigo: {fileID: 2069387354}
+    objetivo: {fileID: 1640660233}
+    cantidadEnemigos: 3
+    tiempoDeSpawn: 2
+    tiempoDeEspera: 90
+    spawnPointsIndices: 020000000000000001000000
+  - prefabEnemigo: {fileID: 119474826}
+    objetivo: {fileID: 1640660233}
+    cantidadEnemigos: 25
+    tiempoDeSpawn: 10
+    tiempoDeEspera: 120
+    spawnPointsIndices: 000000000100000002000000
+  - prefabEnemigo: {fileID: 3480298400801407221}
+    objetivo: {fileID: 1640660233}
+    cantidadEnemigos: 40
+    tiempoDeSpawn: 10
+    tiempoDeEspera: 125
+    spawnPointsIndices: 010000000000000002000000
+  - prefabEnemigo: {fileID: 7971009939213125286}
+    objetivo: {fileID: 1640660233}
+    cantidadEnemigos: 20
+    tiempoDeSpawn: 10
+    tiempoDeEspera: 130
+    spawnPointsIndices: 010000000000000002000000
+  - prefabEnemigo: {fileID: 1071376355}
+    objetivo: {fileID: 1640660233}
+    cantidadEnemigos: 100
+    tiempoDeSpawn: 10
+    tiempoDeEspera: 130
+    spawnPointsIndices: 00000000
   - prefabEnemigo: {fileID: 866950886}
     objetivo: {fileID: 1640660233}
-    cantidadEnemigos: 1
-    tiempoDeSpawn: 1
-    tiempoDeEspera: 20
-    spawnPointsIndices: 
+    cantidadEnemigos: 100
+    tiempoDeSpawn: 10
+    tiempoDeEspera: 130
+    spawnPointsIndices: 01000000
+  - prefabEnemigo: {fileID: 1856878197}
+    objetivo: {fileID: 1640660233}
+    cantidadEnemigos: 100
+    tiempoDeSpawn: 10
+    tiempoDeEspera: 130
+    spawnPointsIndices: 02000000
+  - prefabEnemigo: {fileID: 1092145375}
+    objetivo: {fileID: 1640660233}
+    cantidadEnemigos: 100
+    tiempoDeSpawn: 10
+    tiempoDeEspera: 145
+    spawnPointsIndices: 01000000
+  - prefabEnemigo: {fileID: 2038183606}
+    objetivo: {fileID: 1640660233}
+    cantidadEnemigos: 100
+    tiempoDeSpawn: 10
+    tiempoDeEspera: 145
+    spawnPointsIndices: 00000000
+  - prefabEnemigo: {fileID: 3480298400801407221}
+    objetivo: {fileID: 1640660233}
+    cantidadEnemigos: 100
+    tiempoDeSpawn: 10
+    tiempoDeEspera: 145
+    spawnPointsIndices: 02000000
+  - prefabEnemigo: {fileID: 129617933}
+    objetivo: {fileID: 1640660233}
+    cantidadEnemigos: 80
+    tiempoDeSpawn: 10
+    tiempoDeEspera: 190
+    spawnPointsIndices: 010000000000000002000000
+  - prefabEnemigo: {fileID: 7971009939213125286}
+    objetivo: {fileID: 1640660233}
+    cantidadEnemigos: 25
+    tiempoDeSpawn: 10
+    tiempoDeEspera: 190
+    spawnPointsIndices: 010000000000000002000000
+  - prefabEnemigo: {fileID: 1538079556}
+    objetivo: {fileID: 1640660233}
+    cantidadEnemigos: 25
+    tiempoDeSpawn: 15
+    tiempoDeEspera: 210
+    spawnPointsIndices: 010000000000000002000000
   - prefabEnemigo: {fileID: 2069387354}
     objetivo: {fileID: 1640660233}
     cantidadEnemigos: 6
-    tiempoDeSpawn: 30
-    tiempoDeEspera: 90
-    spawnPointsIndices: 
-  - prefabEnemigo: {fileID: 1856878197}
+    tiempoDeSpawn: 12
+    tiempoDeEspera: 215
+    spawnPointsIndices: 010000000000000002000000
+  - prefabEnemigo: {fileID: 7971009939213125286}
     objetivo: {fileID: 1640660233}
-    cantidadEnemigos: 30
-    tiempoDeSpawn: 30
-    tiempoDeEspera: 90
-    spawnPointsIndices: 
+    cantidadEnemigos: 25
+    tiempoDeSpawn: 12
+    tiempoDeEspera: 215
+    spawnPointsIndices: 010000000000000002000000
   - prefabEnemigo: {fileID: 3480298400801407221}
     objetivo: {fileID: 1640660233}
-    cantidadEnemigos: 0
-    tiempoDeSpawn: 10
-    tiempoDeEspera: 4
-    spawnPointsIndices: 
-  - prefabEnemigo: {fileID: 2069387354}
-    objetivo: {fileID: 1640660233}
-    cantidadEnemigos: 0
-    tiempoDeSpawn: 10
-    tiempoDeEspera: 3
-    spawnPointsIndices: 
+    cantidadEnemigos: 50
+    tiempoDeSpawn: 12
+    tiempoDeEspera: 215
+    spawnPointsIndices: 010000000000000002000000
   - prefabEnemigo: {fileID: 1856878197}
     objetivo: {fileID: 1640660233}
-    cantidadEnemigos: 0
-    tiempoDeSpawn: 10
-    tiempoDeEspera: 2
-    spawnPointsIndices: 
+    cantidadEnemigos: 100
+    tiempoDeSpawn: 12
+    tiempoDeEspera: 215
+    spawnPointsIndices: 010000000000000002000000
   - prefabEnemigo: {fileID: 2069387354}
     objetivo: {fileID: 1640660233}
-    cantidadEnemigos: 0
-    tiempoDeSpawn: 10
-    tiempoDeEspera: 0
-    spawnPointsIndices: 
-  - prefabEnemigo: {fileID: 2038183606}
+    cantidadEnemigos: 270
+    tiempoDeSpawn: 90
+    tiempoDeEspera: 230
+    spawnPointsIndices: 010000000000000002000000
+  - prefabEnemigo: {fileID: 1538079556}
     objetivo: {fileID: 1640660233}
-    cantidadEnemigos: 0
-    tiempoDeSpawn: 10
-    tiempoDeEspera: 0
-    spawnPointsIndices: 
-  - prefabEnemigo: {fileID: 1092145375}
+    cantidadEnemigos: 360
+    tiempoDeSpawn: 90
+    tiempoDeEspera: 230
+    spawnPointsIndices: 010000000000000002000000
+  - prefabEnemigo: {fileID: 119474826}
     objetivo: {fileID: 1640660233}
-    cantidadEnemigos: 0
-    tiempoDeSpawn: 10
-    tiempoDeEspera: 0
-    spawnPointsIndices: 
+    cantidadEnemigos: 450
+    tiempoDeSpawn: 90
+    tiempoDeEspera: 230
+    spawnPointsIndices: 010000000000000002000000
   spawnPoints:
   - {x: -15.5, y: 0.5, z: 0}
   - {x: 15, y: 0.6, z: 0}
@@ -3624,7 +3726,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5098286984691504220, guid: ee1f21c3edebb8e4497c80bf14727677, type: 3}
       propertyPath: reward
-      value: 0.25
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 5098286984691504220, guid: ee1f21c3edebb8e4497c80bf14727677, type: 3}
       propertyPath: tilemap
@@ -4303,7 +4405,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2304259987844269394, guid: e702a51b739a75f4093d06cba95e2932, type: 3}
       propertyPath: reward
-      value: 5
+      value: 5.5
       objectReference: {fileID: 0}
     - target: {fileID: 2304259987844269394, guid: e702a51b739a75f4093d06cba95e2932, type: 3}
       propertyPath: tilemap
@@ -4985,11 +5087,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -5476971614429003836, guid: d6ace30417e8f014383780b0730e4e37, type: 3}
       propertyPath: health
-      value: 10000
+      value: 15000
       objectReference: {fileID: 0}
     - target: {fileID: -5476971614429003836, guid: d6ace30417e8f014383780b0730e4e37, type: 3}
       propertyPath: reward
-      value: 100
+      value: 500
       objectReference: {fileID: 0}
     - target: {fileID: -5476971614429003836, guid: d6ace30417e8f014383780b0730e4e37, type: 3}
       propertyPath: tilemap
@@ -5005,7 +5107,7 @@ PrefabInstance:
       objectReference: {fileID: 1441136069}
     - target: {fileID: -5476971614429003836, guid: d6ace30417e8f014383780b0730e4e37, type: 3}
       propertyPath: maxHealth
-      value: 10000
+      value: 15000
       objectReference: {fileID: 0}
     - target: {fileID: -5476971614429003836, guid: d6ace30417e8f014383780b0730e4e37, type: 3}
       propertyPath: deathSound
@@ -6207,7 +6309,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -5476971614429003836, guid: d6ace30417e8f014383780b0730e4e37, type: 3}
       propertyPath: reward
-      value: 15
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: -5476971614429003836, guid: d6ace30417e8f014383780b0730e4e37, type: 3}
       propertyPath: tilemap
@@ -6836,7 +6938,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2304259987844269394, guid: e702a51b739a75f4093d06cba95e2932, type: 3}
       propertyPath: reward
-      value: 10
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 2304259987844269394, guid: e702a51b739a75f4093d06cba95e2932, type: 3}
       propertyPath: tilemap
@@ -7346,7 +7448,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7472888655379733494, guid: 4dc038002994a17448505aa1536b33f7, type: 3}
       propertyPath: reward
-      value: 0.25
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7472888655379733494, guid: 4dc038002994a17448505aa1536b33f7, type: 3}
       propertyPath: tilemap
@@ -7457,7 +7559,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5098286984691504220, guid: ee1f21c3edebb8e4497c80bf14727677, type: 3}
       propertyPath: reward
-      value: 0.5
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5098286984691504220, guid: ee1f21c3edebb8e4497c80bf14727677, type: 3}
       propertyPath: tilemap
@@ -13044,7 +13146,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5098286984691504220, guid: ee1f21c3edebb8e4497c80bf14727677, type: 3}
       propertyPath: reward
-      value: 1
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 5098286984691504220, guid: ee1f21c3edebb8e4497c80bf14727677, type: 3}
       propertyPath: tilemap
@@ -23227,7 +23329,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7472888655379733494, guid: 4dc038002994a17448505aa1536b33f7, type: 3}
       propertyPath: reward
-      value: 1
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 7472888655379733494, guid: 4dc038002994a17448505aa1536b33f7, type: 3}
       propertyPath: tilemap
@@ -24123,11 +24225,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2304259987844269394, guid: e702a51b739a75f4093d06cba95e2932, type: 3}
       propertyPath: health
-      value: 5000
+      value: 4000
       objectReference: {fileID: 0}
     - target: {fileID: 2304259987844269394, guid: e702a51b739a75f4093d06cba95e2932, type: 3}
       propertyPath: reward
-      value: 20
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 2304259987844269394, guid: e702a51b739a75f4093d06cba95e2932, type: 3}
       propertyPath: tilemap
@@ -24139,7 +24241,7 @@ PrefabInstance:
       objectReference: {fileID: 1640660233}
     - target: {fileID: 2304259987844269394, guid: e702a51b739a75f4093d06cba95e2932, type: 3}
       propertyPath: maxHealth
-      value: 5000
+      value: 4000
       objectReference: {fileID: 0}
     - target: {fileID: 2304259987844269394, guid: e702a51b739a75f4093d06cba95e2932, type: 3}
       propertyPath: deathSound
@@ -24374,7 +24476,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7472888655379733494, guid: 4dc038002994a17448505aa1536b33f7, type: 3}
       propertyPath: reward
-      value: 2
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 7472888655379733494, guid: 4dc038002994a17448505aa1536b33f7, type: 3}
       propertyPath: tilemap

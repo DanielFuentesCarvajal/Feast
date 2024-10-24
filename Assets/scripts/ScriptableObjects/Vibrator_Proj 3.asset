@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4e7772f7db07314d8c6d3260318974a, type: 3}
   m_Name: Vibrator_Proj 3
   m_EditorClassIdentifier: 
-  damage: 90
+  damage: 115
   speed: 20
   areaDeRebote: 0
   areaDeEfecto: 0

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4e7772f7db07314d8c6d3260318974a, type: 3}
   m_Name: Tentacle_Proj 2
   m_EditorClassIdentifier: 
-  damage: 40
+  damage: 50
   speed: 30
   areaDeRebote: 2
   areaDeEfecto: 0

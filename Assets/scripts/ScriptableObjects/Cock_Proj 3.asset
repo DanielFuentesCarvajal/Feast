@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4e7772f7db07314d8c6d3260318974a, type: 3}
   m_Name: Cock_Proj 3
   m_EditorClassIdentifier: 
-  damage: 600
+  damage: 900
   speed: 10
   areaDeRebote: 0
-  areaDeEfecto: 1
+  areaDeEfecto: 1.5
   maxBounces: 0
   impactParticles: {fileID: 0}
   shootParticles: {fileID: 0}

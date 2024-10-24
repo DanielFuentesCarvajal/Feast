@@ -15,7 +15,7 @@ MonoBehaviour:
   damage: 400
   speed: 10
   areaDeRebote: 0
-  areaDeEfecto: 0.3
+  areaDeEfecto: 0.5
   maxBounces: 0
   impactParticles: {fileID: 0}
   shootParticles: {fileID: 0}
