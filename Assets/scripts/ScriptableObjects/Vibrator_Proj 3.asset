@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e4e7772f7db07314d8c6d3260318974a, type: 3}
+  m_Name: Vibrator_Proj 3
+  m_EditorClassIdentifier: 
+  damage: 90
+  speed: 20
+  areaDeRebote: 0
+  areaDeEfecto: 0
+  maxBounces: 0
+  impactParticles: {fileID: 0}
+  shootParticles: {fileID: 0}
+  visualPrefab: {fileID: 9206786421899634985, guid: 6f1574b916481ff4aa3f2e6f163b7c32, type: 3}

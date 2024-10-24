@@ -1,14 +1,19 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Projectile : MonoBehaviour
 {
-    private Transform target; // Objetivo del proyectil
+    private Transform target; // Objetivo actual del proyectil
     private float speed;
     private float damage;
-    private float areaOfEffect;
+    private float areaDeRebote; // Área para rebote del proyectil
+    private float areaDeEfecto; // Área para daño en área
+    private int remainingBounces; // Contador de rebotes restantes
 
     public ParticleSystem impactParticles; // Partículas al impactar
     public ParticleSystem shootParticles; // Partículas al disparar
+
+    private List<Transform> hitTargets = new List<Transform>(); // Lista de enemigos golpeados
 
     // Método para inicializar el proyectil
     public void Initialize(GameObject targetEnemy, ProjectileConfig config)
@@ -22,11 +27,12 @@ public class Projectile : MonoBehaviour
         target = targetEnemy.transform;
         speed = config.speed;
         damage = config.damage;
-        areaOfEffect = config.areaOfEffect;
+        areaDeRebote = config.areaDeRebote; // Usar el área de rebote del ScriptableObject
+        areaDeEfecto = config.areaDeEfecto; // Usar el área de efecto del ScriptableObject
+        remainingBounces = config.maxBounces; // Usar el valor de rebotes del ScriptableObject
 
-        Debug.Log($"Proyectil inicializado con objetivo: {target.name}, Daño: {damage}, Velocidad: {speed}");
+        Debug.Log($"Proyectil inicializado con objetivo: {target.name}, Daño: {damage}, Velocidad: {speed}, Rebotes: {remainingBounces}");
 
-        // Asignar partículas de impacto y disparo
         impactParticles = config.impactParticles;
         shootParticles = config.shootParticles;
 
@@ -69,12 +75,14 @@ public class Projectile : MonoBehaviour
     }
 
     // Método para manejar el impacto con el objetivo
-    // Método para manejar el impacto con el objetivo
-    // Método para manejar el impacto con el objetivo
     void HitTarget()
     {
         Debug.Log("HitTarget() llamado.");
 
+        // Registrar que el objetivo ha sido golpeado
+        hitTargets.Add(target);
+
+        // Generar partículas de impacto
         if (impactParticles != null)
         {
             ParticleSystem particles = Instantiate(impactParticles, transform.position, Quaternion.identity);
@@ -82,37 +90,88 @@ public class Projectile : MonoBehaviour
             Destroy(particles.gameObject, particles.main.duration);
         }
 
-        // Infligir daño al objetivo
-        if (target.CompareTag("Enemigo"))
+        // Si el área de efecto es mayor que 0, aplicar daño en área
+        if (areaDeEfecto > 0)
         {
-            Enemigo enemy = target.GetComponent<Enemigo>();
-            if (enemy != null)
-            {
-                Debug.Log($"Infligiendo {damage} de daño a {target.name}.");
-                enemy.TakeDamage(damage); // Llamar a TakeDamage del enemigo
-            }
+            ApplyAreaDamage();
         }
-        else if (areaOfEffect > 0f)
+        else
         {
-            // Infligir daño en área de efecto
-            Collider2D[] enemies = Physics2D.OverlapCircleAll(transform.position, areaOfEffect, LayerMask.GetMask("Enemigo"));
-            foreach (Collider2D hitEnemy in enemies)
+            // Si el área de efecto es 0, aplicar daño solo al objetivo principal
+            if (target.CompareTag("Enemigo"))
             {
-                Enemigo enemyScript = hitEnemy.GetComponent<Enemigo>();
-                if (enemyScript != null)
+                Enemigo enemy = target.GetComponent<Enemigo>();
+                if (enemy != null)
                 {
-                    Debug.Log($"Infligiendo {damage} de daño a {hitEnemy.name} en área de efecto.");
-                    enemyScript.TakeDamage(damage); // Llamar a TakeDamage del enemigo
+                    Debug.Log($"Infligiendo {damage} de daño a {target.name}.");
+                    enemy.TakeDamage(damage);
                 }
             }
         }
 
-        Destroy(gameObject); // Destruir el proyectil después del impacto
+        // Si quedan rebotes disponibles, buscar el enemigo más cercano
+        if (remainingBounces > 0)
+        {
+            Transform nextTarget = FindNearestEnemy();
+            if (nextTarget != null)
+            {
+                target = nextTarget;
+                remainingBounces--;
+                Debug.Log($"Rebotando al siguiente objetivo: {target.name}. Rebotes restantes: {remainingBounces}");
+
+                // Reorientar el proyectil hacia el nuevo objetivo
+                Vector3 direction = (target.position - transform.position).normalized;
+                transform.right = direction;
+
+                return; // Continuar con el siguiente objetivo
+            }
+        }
+
+        // Destruir el proyectil después de rebotar o si no hay más enemigos
+        Destroy(gameObject);
     }
 
+    // Método para infligir daño en área a todos los enemigos dentro del área de efecto
+    void ApplyAreaDamage()
+    {
+        Collider2D[] enemiesInRange = Physics2D.OverlapCircleAll(transform.position, areaDeEfecto, LayerMask.GetMask("Enemigo"));
 
+        foreach (Collider2D enemyCollider in enemiesInRange)
+        {
+            Enemigo enemy = enemyCollider.GetComponent<Enemigo>();
+            if (enemy != null)
+            {
+                Debug.Log($"Infligiendo {damage} de daño en área a {enemy.name}.");
+                enemy.TakeDamage(damage);
+            }
+        }
+    }
 
-    // Opcional: Visualización del trayecto del proyectil en el Editor
+    // Método para encontrar el enemigo más cercano que no haya sido golpeado
+    Transform FindNearestEnemy()
+    {
+        Collider2D[] enemiesInRange = Physics2D.OverlapCircleAll(transform.position, areaDeRebote, LayerMask.GetMask("Enemigo"));
+        Transform nearestEnemy = null;
+        float shortestDistance = Mathf.Infinity;
+
+        foreach (Collider2D enemyCollider in enemiesInRange)
+        {
+            Transform enemyTransform = enemyCollider.transform;
+            if (!hitTargets.Contains(enemyTransform)) // Excluir enemigos ya golpeados
+            {
+                float distanceToEnemy = Vector3.Distance(transform.position, enemyTransform.position);
+                if (distanceToEnemy < shortestDistance)
+                {
+                    nearestEnemy = enemyTransform;
+                    shortestDistance = distanceToEnemy;
+                }
+            }
+        }
+
+        return nearestEnemy;
+    }
+
+    // Opcional: Visualización del área de efecto y rebote en el Editor
     void OnDrawGizmosSelected()
     {
         if (target != null)
@@ -120,5 +179,13 @@ public class Projectile : MonoBehaviour
             Gizmos.color = Color.blue;
             Gizmos.DrawLine(transform.position, target.position);
         }
+
+        // Dibujar el área de rebote
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, areaDeRebote);
+
+        // Dibujar el área de efecto
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(transform.position, areaDeEfecto);
     }
 }

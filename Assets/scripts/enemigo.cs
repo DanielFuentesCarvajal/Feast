@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
-using UnityEngine.UI; 
+using UnityEngine.UI;
 
 public class Enemigo : MonoBehaviour
 {
@@ -11,8 +11,19 @@ public class Enemigo : MonoBehaviour
     public float health = 100f; // Vida del enemigo
     public float maxHealth = 100f; // Vida máxima del enemigo
     public float damage = 10f; // Daño que inflige el enemigo
+
     [Header("Recompensa")]
-    public int reward = 10; // Valor en monedas al destruir al enemigo
+    public float reward = 0.2f; // Valor en monedas al destruir al enemigo (ahora es decimal)
+
+    [Header("Partículas")]
+    public GameObject hitParticlesPrefab; // Prefab de partículas al ser herido
+    public GameObject deathParticlesPrefab; // Prefab de partículas al morir
+
+    [Header("Sonido")]
+    public AudioClip deathSound; // Sonido de muerte
+    public float deathSoundVolume = 1.0f; // Volumen del sonido de muerte (1 = volumen normal)
+    private AudioSource audioSource; // Componente de audio
+
     public Slider healthBar; // Barra de vida
     public Transform objetivo;
 
@@ -39,9 +50,9 @@ public class Enemigo : MonoBehaviour
         healthBar.value = health; // Establecer el valor inicial
         UpdateHealthBar();
         lastPosition = transform.position; // Inicializar la última posición
+        audioSource = GetComponent<AudioSource>(); // Obtener el componente de audio
         StartCoroutine(MoveToNextTile());
     }
-
 
     IEnumerator MoveToNextTile()
     {
@@ -50,7 +61,7 @@ public class Enemigo : MonoBehaviour
             Vector3Int targetTile = tileQueue.Dequeue();
             Vector3 targetPosition = tilemap.GetCellCenterWorld(targetTile);
 
-            while (Vector3.Distance(transform.position, targetPosition) > 0.01f)
+            while (Vector3.Distance(transform.position, targetPosition) > 0.1f) // Aumentamos el margen de distancia
             {
                 transform.position = Vector3.MoveTowards(transform.position, targetPosition, speed * Time.deltaTime);
 
@@ -67,21 +78,6 @@ public class Enemigo : MonoBehaviour
 
                 // Actualizar la última posición
                 lastPosition = transform.position;
-
-                // Comprobar si está cerca del centro de la tile y mostrar las coordenadas
-                if (Vector3.Distance(transform.position, targetPosition) < 0.1f)
-                {
-                    Collider2D collider = Physics2D.OverlapPoint(targetPosition);
-                    if (collider != null && collider.CompareTag("Objetivo"))
-                    {
-                        Objetivo objetivoScript = collider.GetComponent<Objetivo>();
-                        if (objetivoScript != null)
-                        {
-                            objetivoScript.TakeDamage(damage);
-                        }
-                        Die();
-                    }
-                }
 
                 yield return null;
             }
@@ -100,6 +96,20 @@ public class Enemigo : MonoBehaviour
         }
     }
 
+    // Este método se llamará automáticamente cuando el enemigo colisione con un trigger.
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("Objetivo"))
+        {
+            Objetivo objetivoScript = other.GetComponent<Objetivo>();
+            if (objetivoScript != null)
+            {
+                objetivoScript.TakeDamage(damage); // Inflige daño al objetivo
+            }
+            Die(); // Destruye el enemigo
+        }
+    }
+
     public void TakeDamage(float amount)
     {
         Debug.Log($"{gameObject.name} recibió {amount} de daño. Salud antes: {health}");
@@ -107,6 +117,12 @@ public class Enemigo : MonoBehaviour
         health = Mathf.Clamp(health, 0, maxHealth); // Asegurarse de que la salud no baje de 0
         Debug.Log($"{gameObject.name} Salud después: {health}");
         UpdateHealthBar();
+
+        // Instanciar partículas de daño si están asignadas
+        if (hitParticlesPrefab != null)
+        {
+            Instantiate(hitParticlesPrefab, transform.position, Quaternion.identity);
+        }
 
         if (health <= 0)
         {
@@ -122,9 +138,41 @@ public class Enemigo : MonoBehaviour
             healthBar.value = health; // Actualizar el valor de la barra de salud
         }
     }
+
     void Die()
     {
-        GameManager.Instance.AddCoins(reward);
+        // Instanciar partículas de muerte si están asignadas
+        if (deathParticlesPrefab != null)
+        {
+            Instantiate(deathParticlesPrefab, transform.position, Quaternion.identity);
+        }
+
+        // Crear un objeto temporal para reproducir el sonido de muerte
+        if (deathSound != null)
+        {
+            GameObject tempAudioSource = new GameObject("DeathSound");
+            AudioSource audioSource = tempAudioSource.AddComponent<AudioSource>();
+            audioSource.clip = deathSound;
+
+            // Aplicar el volumen desde la variable pública
+            audioSource.volume = deathSoundVolume;
+            audioSource.Play();
+
+            // Destruir el objeto temporal después de que termine el sonido
+            Destroy(tempAudioSource, deathSound.length);
+        }
+
+        // Añadir directamente las monedas con el valor de la recompensa
+        if (GameManager.Instance != null)
+        {
+            GameManager.Instance.AddCoins(reward);
+        }
+        else
+        {
+            Debug.LogError("GameManager instance is null. Coins cannot be added.");
+        }
+
+        // Destruir el enemigo inmediatamente
         Destroy(gameObject);
     }
 }

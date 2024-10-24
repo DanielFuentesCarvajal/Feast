@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e4e7772f7db07314d8c6d3260318974a, type: 3}
+  m_Name: Tentacle_Proj
+  m_EditorClassIdentifier: 
+  damage: 10
+  speed: 30
+  areaDeRebote: 1.5
+  areaDeEfecto: 0
+  maxBounces: 2
+  impactParticles: {fileID: 0}
+  shootParticles: {fileID: 0}
+  visualPrefab: {fileID: 424702034101783650, guid: 2862d8ae498c7304d8715efa3251abf8, type: 3}

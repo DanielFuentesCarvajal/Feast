@@ -12,7 +12,7 @@ public class GameManager : MonoBehaviour
 
     // *** Monedas ***
     public int startingCoins = 100; // Cantidad inicial de monedas
-    private int currentCoins;
+    private float currentCoins; // Ahora puede almacenar decimales
 
     [Header("UI")]
     public TextMeshProUGUI coinsText; // Referencia al TextMeshPro en el Canvas para mostrar las monedas
@@ -23,13 +23,16 @@ public class GameManager : MonoBehaviour
     {
         public GameObject prefabEnemigo; // Prefab del enemigo
         public Transform objetivo;       // Objetivo del enemigo
-        public Vector3 esquina;          // Punto de spawn
         public int cantidadEnemigos;     // Número de enemigos a spawnear
         public float tiempoDeSpawn;      // Tiempo entre enemigos
         public float tiempoDeEspera;     // Tiempo antes de comenzar a spawnear enemigos
+        public List<int> spawnPointsIndices; // Índices de los puntos de spawn a usar
     }
 
     public List<SpawnConfig> spawnConfigs;
+
+    // Lista dinámica de spawns como coordenadas
+    public List<Vector3> spawnPoints; // Lista de coordenadas de puntos de spawn
 
     void Awake()
     {
@@ -37,8 +40,6 @@ public class GameManager : MonoBehaviour
         if (Instance == null)
         {
             Instance = this; // Asignar la instancia
-            // No usar DontDestroyOnLoad, así que comentamos la línea a continuación
-            // DontDestroyOnLoad(gameObject); 
         }
         else
         {
@@ -61,7 +62,7 @@ public class GameManager : MonoBehaviour
     }
 
     // *** Gestión de Monedas ***
-    public void AddCoins(int amount)
+    public void AddCoins(float amount)
     {
         currentCoins += amount;
         UpdateCoinsUI();
@@ -86,13 +87,14 @@ public class GameManager : MonoBehaviour
     {
         if (coinsText != null)
         {
-            coinsText.text = currentCoins.ToString();
+            // Solo mostrar la parte entera de las monedas
+            coinsText.text = Mathf.FloorToInt(currentCoins).ToString();
         }
     }
 
     public int GetCurrentCoins()
     {
-        return currentCoins;
+        return Mathf.FloorToInt(currentCoins); // Retorna la parte entera
     }
 
     // *** Spawner de Enemigos ***
@@ -104,7 +106,11 @@ public class GameManager : MonoBehaviour
 
         for (int i = 0; i < config.cantidadEnemigos; i++)
         {
-            InstanciarEnemigo(config.prefabEnemigo, config.esquina, config.objetivo);
+            // Seleccionar un punto de spawn aleatorio desde los índices especificados en la configuración
+            int spawnIndex = config.spawnPointsIndices[Random.Range(0, config.spawnPointsIndices.Count)];
+            Vector3 spawnPosition = spawnPoints[spawnIndex];
+
+            InstanciarEnemigo(config.prefabEnemigo, spawnPosition, config.objetivo);
             yield return new WaitForSeconds(intervalo);
         }
     }

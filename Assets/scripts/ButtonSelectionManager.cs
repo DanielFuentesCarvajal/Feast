@@ -1,9 +1,13 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using TMPro; // Para TextMeshPro
-using UnityEngine.SceneManagement; // Para cambiar de escenas
 using System.Collections;
 using UnityEngine.EventSystems;
+
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 public class ButtonSelectionManager : MonoBehaviour
 {
@@ -15,22 +19,23 @@ public class ButtonSelectionManager : MonoBehaviour
     public GameObject escorpionPrefab;
     public GameObject torreta3prefab;
 
-    public TextMeshProUGUI catapultaCostText; // Texto para el costo de la catapulta
-    public TextMeshProUGUI escorpionCostText; // Texto para el costo del escorpión
-    public TextMeshProUGUI torreta3CostText; // Texto para el costo de la torreta
+    public TextMeshProUGUI catapultaCostText;
+    public TextMeshProUGUI escorpionCostText;
+    public TextMeshProUGUI torreta3CostText;
 
-    public GameObject VictoryPanel; // Panel de victoria
-    public GameObject DefeatPanel; // Panel de derrota
-    public Button NextLevelButton; // Botón para pasar al siguiente nivel
-    public Button RetryButton; // Botón para reintentar nivel
+    public GameObject VictoryPanel;
+    public GameObject DefeatPanel;
+    public Button NextLevelButton;
+    public Button RetryButton;
 
-    public TextMeshProUGUI timerText; // Cronómetro en TextMeshPro
-    public float timerMinutes = 0f; // Minutos configurables
-    public float timerSeconds = 0f; // Segundos configurables
+    public TextMeshProUGUI timerText;
+    public float timerMinutes = 0f;
+    public float timerSeconds = 0f;
+    public int nextSceneIndex;
 
     private GameObject selectedPrefab;
     private bool gamePaused = false;
-    private bool gameOver = false; // Para evitar que se mueva el tiempo tras la derrota o victoria
+    private bool gameOver = false;
     private Color originalColor;
 
     private void Start()
@@ -39,24 +44,19 @@ public class ButtonSelectionManager : MonoBehaviour
         buttonEscorpion.onClick.AddListener(() => SelectPrefab(escorpionPrefab));
         buttontorreta3.onClick.AddListener(() => SelectPrefab(torreta3prefab));
 
-        // Ocultar paneles al inicio
         VictoryPanel.SetActive(false);
         DefeatPanel.SetActive(false);
 
-        // Asignar acciones a los botones de victoria y derrota
         NextLevelButton.onClick.AddListener(GoToNextLevel);
         RetryButton.onClick.AddListener(RetryLevel);
 
-        // Asignar eventos de hover
         AddHoverEffect(buttonCatapulta, catapultaPrefab, catapultaCostText);
         AddHoverEffect(buttonEscorpion, escorpionPrefab, escorpionCostText);
         AddHoverEffect(buttontorreta3, torreta3prefab, torreta3CostText);
 
-        // Iniciar el cronómetro
         StartCoroutine(StartTimer());
     }
 
-    // Método para agregar el efecto hover
     private void AddHoverEffect(Button button, GameObject prefab, TextMeshProUGUI costText)
     {
         Turret turretScript = prefab.GetComponent<Turret>();
@@ -66,10 +66,8 @@ public class ButtonSelectionManager : MonoBehaviour
             return;
         }
 
-        // Guardar color original del botón
         originalColor = button.image.color;
 
-        // Asignar acciones cuando el mouse entre y salga del botón
         EventTrigger trigger = button.gameObject.AddComponent<EventTrigger>();
 
         EventTrigger.Entry pointerEnter = new EventTrigger.Entry();
@@ -84,28 +82,19 @@ public class ButtonSelectionManager : MonoBehaviour
         trigger.triggers.Add(pointerExit);
     }
 
-    // Método cuando el mouse entra en el botón
     private void OnHoverEnter(Button button, int cost, TextMeshProUGUI costText)
     {
-        // Oscurecer el botón
         button.image.color = new Color(originalColor.r * 0.7f, originalColor.g * 0.7f, originalColor.b * 0.7f);
-
-        // Mostrar el costo
         costText.text = cost.ToString();
         costText.gameObject.SetActive(true);
     }
 
-    // Método cuando el mouse sale del botón
     private void OnHoverExit(Button button, TextMeshProUGUI costText)
     {
-        // Restaurar el color original
         button.image.color = originalColor;
-
-        // Esconder el costo
         costText.gameObject.SetActive(false);
     }
 
-    // Selección de prefab
     public void SelectPrefab(GameObject prefab)
     {
         selectedPrefab = prefab;
@@ -116,37 +105,32 @@ public class ButtonSelectionManager : MonoBehaviour
         return selectedPrefab;
     }
 
-    // Método para activar el panel de victoria
     public void Victory()
     {
         gamePaused = true;
         VictoryPanel.SetActive(true);
-        Time.timeScale = 0; // Pausar el juego
+        Time.timeScale = 0;
     }
 
-    // Método para activar el panel de derrota
     public void Defeat()
     {
         gamePaused = true;
         DefeatPanel.SetActive(true);
-        Time.timeScale = 0; // Pausar el juego
+        Time.timeScale = 0;
     }
 
-    // Ir al siguiente nivel
     public void GoToNextLevel()
     {
-        Time.timeScale = 1; // Restaurar la escala de tiempo
-        SceneManager.LoadScene("Nivel2"); // Cambia el nombre de la escena aquí
+        Time.timeScale = 1;
+        SceneManager.LoadScene(nextSceneIndex);
     }
 
-    // Reintentar el nivel actual
     public void RetryLevel()
     {
-        Time.timeScale = 1; // Restaurar la escala de tiempo
-        GameManager.Instance.RetryLevel(); // Llamar al método del GameManager
+        Time.timeScale = 1;
+        GameManager.Instance.RetryLevel();
     }
 
-    // Cronómetro configurable
     IEnumerator StartTimer()
     {
         float totalTime = (timerMinutes * 60) + timerSeconds;
@@ -157,11 +141,9 @@ public class ButtonSelectionManager : MonoBehaviour
             {
                 totalTime -= Time.deltaTime;
 
-                // Calcular minutos y segundos
                 int minutes = Mathf.FloorToInt(totalTime / 60);
                 int seconds = Mathf.FloorToInt(totalTime % 60);
 
-                // Actualizar el texto del cronómetro
                 timerText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
             }
             yield return null;
@@ -169,16 +151,46 @@ public class ButtonSelectionManager : MonoBehaviour
 
         if (totalTime <= 0 && !gameOver)
         {
-            Victory(); // Llamar a victoria cuando el tiempo llegue a 0
+            Victory();
         }
     }
 
-    // Método para detectar si el objetivo ha llegado a 0
     public void CheckObjectiveHealth(float health)
     {
         if (health <= 0 && !gameOver)
         {
-            Defeat(); // Activar derrota si la vida del objetivo es 0
+            Defeat();
         }
     }
 }
+
+
+#if UNITY_EDITOR
+[CustomEditor(typeof(ButtonSelectionManager))]
+public class LevelManagerEditor : Editor
+{
+    public override void OnInspectorGUI()
+    {
+        ButtonSelectionManager levelManager = (ButtonSelectionManager)target;
+
+        // Obtén todas las escenas incluidas en Build Settings
+        int sceneCount = SceneManager.sceneCountInBuildSettings;
+        string[] scenes = new string[sceneCount];
+        for (int i = 0; i < sceneCount; i++)
+        {
+            scenes[i] = System.IO.Path.GetFileNameWithoutExtension(SceneUtility.GetScenePathByBuildIndex(i));
+        }
+
+        // Crear un menú desplegable para seleccionar la escena
+        levelManager.nextSceneIndex = EditorGUILayout.Popup("Next Scene", levelManager.nextSceneIndex, scenes);
+
+        // Guardar los cambios en el script
+        if (GUI.changed)
+        {
+            EditorUtility.SetDirty(levelManager);
+        }
+
+        DrawDefaultInspector();
+    }
+}
+#endif
